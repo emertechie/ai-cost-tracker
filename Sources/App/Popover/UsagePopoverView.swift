@@ -78,7 +78,7 @@ struct UsagePopoverView: View {
                         Spacer()
                         Text(String(format: "$%.2f", snapshot.billedAmount))
                             .font(.subheadline.monospacedDigit().weight(.semibold))
-                            .foregroundStyle(Color(red: 1.0, green: 0.35, blue: 0.25))
+                            .foregroundStyle(Color(red: 0.6, green: 0.1, blue: 0.1))
                     }
                     if snapshot.billedQuantity > 0 {
                         Text("\(snapshot.billedQuantity) premium requests")
@@ -195,7 +195,7 @@ struct UsagePopoverView: View {
     }
 
     private func progressColor(_ percent: Double) -> Color {
-        if percent >= 1.0 { return .red }
+        if percent >= 1.0 { return Color(red: 0.6, green: 0.1, blue: 0.1) }
         if percent >= 0.9 { return .orange }
         if percent >= 0.7 { return .yellow }
         return .green
