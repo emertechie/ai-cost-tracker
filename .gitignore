@@ -1,0 +1,33 @@
+# macOS
+.DS_Store
+
+# Xcode user data
+*.xcuserstate
+*.xcscmblueprint
+*.xccheckout
+xcuserdata/
+
+# Xcode project/workspace user settings
+*.xcodeproj/project.xcworkspace/xcuserdata/
+*.xcworkspace/xcuserdata/
+
+# Build artifacts
+DerivedData/
+build/
+.build/
+
+# SwiftPM
+Packages/
+Package.resolved
+
+# Test/coverage outputs
+*.profdata
+*.profraw
+
+# Local env/secrets
+.env
+.env.*
+!.env.example
+
+# Local API captures from Phase 0 verification
+Tests/Fixtures/github-usage-live-*.json
