@@ -24,7 +24,7 @@ Click the menu bar item to see:
 ./scripts/build_app.sh
 ```
 
-This creates `build/AICostTracker.app`.
+This compiles the project, assembles `build/AICostTracker.app`, and ad-hoc code-signs it. The signature is required for persistent Keychain access (so you aren't prompted for your password on every refresh).
 
 ## Running
 

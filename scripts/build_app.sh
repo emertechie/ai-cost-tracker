@@ -55,6 +55,15 @@ cat > "${CONTENTS_DIR}/Info.plist" <<PLIST
 </plist>
 PLIST
 
+# Ad-hoc codesign so the keychain can identify the app with a stable
+# code identity. This lets "Always Allow" persist across launches.
+# Note: restricted entitlements (like keychain-access-groups) cannot be
+# used with ad-hoc signatures — they require an Apple Developer identity.
+# Basic keychain access works without explicit entitlements; the system
+# uses the app's code signature + service/account to gate access.
+echo "==> Code-signing app bundle (ad-hoc)..."
+codesign --force --sign - "${APP_DIR}"
+
 echo "==> Done! App bundle created at:"
 echo "    ${APP_DIR}"
 echo ""
