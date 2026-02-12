@@ -18,31 +18,50 @@ struct SettingsView: View {
     }
 
     var body: some View {
-        Form {
-            Section("GitHub Copilot") {
-                TextField("Username", text: $username)
-                    .textFieldStyle(.roundedBorder)
+        VStack(alignment: .leading, spacing: 20) {
+            // GitHub Copilot section
+            VStack(alignment: .leading, spacing: 12) {
+                Text("GitHub Copilot")
+                    .font(.headline)
 
-                HStack {
-                    if showToken {
-                        TextField("Personal Access Token", text: $token)
-                            .textFieldStyle(.roundedBorder)
-                    } else {
-                        SecureField("Personal Access Token", text: $token)
-                            .textFieldStyle(.roundedBorder)
-                    }
-                    Button(showToken ? "Hide" : "Show") {
-                        showToken.toggle()
-                    }
-                    .buttonStyle(.borderless)
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Username")
+                        .font(.subheadline.weight(.medium))
+                    TextField("github-username", text: $username)
+                        .textFieldStyle(.roundedBorder)
+                        .multilineTextAlignment(.leading)
                 }
 
-                Text("Fine-grained PAT with User → Plan (read) permission")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Personal Access Token")
+                        .font(.subheadline.weight(.medium))
+                    HStack {
+                        if showToken {
+                            TextField("ghp_...", text: $token)
+                                .textFieldStyle(.roundedBorder)
+                                .multilineTextAlignment(.leading)
+                        } else {
+                            SecureField("ghp_...", text: $token)
+                                .textFieldStyle(.roundedBorder)
+                        }
+                        Button(showToken ? "Hide" : "Show") {
+                            showToken.toggle()
+                        }
+                        .buttonStyle(.borderless)
+                    }
+                    Text("Fine-grained PAT with User \u{2192} Plan (read) permission")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
             }
 
-            Section("Usage Settings") {
+            Divider()
+
+            // Usage Settings section
+            VStack(alignment: .leading, spacing: 12) {
+                Text("Usage Settings")
+                    .font(.headline)
+
                 HStack {
                     Text("Included allowance")
                     Spacer()
@@ -62,40 +81,42 @@ struct SettingsView: View {
                 }
             }
 
-            Section {
-                HStack {
-                    Button("Save") {
-                        save()
-                    }
-                    .keyboardShortcut(.defaultAction)
+            Divider()
 
-                    Button("Test Connection") {
-                        testConnection()
-                    }
-                    .disabled(username.isEmpty || token.isEmpty)
+            // Actions
+            HStack {
+                Button("Save") {
+                    save()
+                }
+                .keyboardShortcut(.defaultAction)
 
-                    Spacer()
+                Button("Test Connection") {
+                    testConnection()
+                }
+                .disabled(username.isEmpty || token.isEmpty)
 
-                    switch validationStatus {
-                    case .idle:
-                        EmptyView()
-                    case .validating:
-                        ProgressView()
-                            .controlSize(.small)
-                    case .success:
-                        Label("Connected", systemImage: "checkmark.circle.fill")
-                            .foregroundStyle(.green)
-                            .font(.caption)
-                    case .failure(let msg):
-                        Label(msg, systemImage: "xmark.circle.fill")
-                            .foregroundStyle(.red)
-                            .font(.caption)
-                    }
+                Spacer()
+
+                switch validationStatus {
+                case .idle:
+                    EmptyView()
+                case .validating:
+                    ProgressView()
+                        .controlSize(.small)
+                case .success:
+                    Label("Connected", systemImage: "checkmark.circle.fill")
+                        .foregroundStyle(.green)
+                        .font(.caption)
+                case .failure(let msg):
+                    Label(msg, systemImage: "xmark.circle.fill")
+                        .foregroundStyle(.red)
+                        .font(.caption)
                 }
             }
         }
-        .formStyle(.grouped)
-        .frame(width: 420, height: 340)
+        .padding(20)
+        .frame(width: 420)
+        .fixedSize(horizontal: false, vertical: true)
         .onAppear {
             username = appState.username
             token = appState.token

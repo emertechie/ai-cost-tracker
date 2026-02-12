@@ -78,7 +78,7 @@ struct UsagePopoverView: View {
                         Spacer()
                         Text(String(format: "$%.2f", snapshot.billedAmount))
                             .font(.subheadline.monospacedDigit().weight(.semibold))
-                            .foregroundStyle(.red)
+                            .foregroundStyle(Color(red: 1.0, green: 0.35, blue: 0.25))
                     }
                     if snapshot.billedQuantity > 0 {
                         Text("\(snapshot.billedQuantity) premium requests")
@@ -166,6 +166,7 @@ struct UsagePopoverView: View {
             }
             .buttonStyle(.borderless)
             .disabled(appState.isLoading)
+            .help("Refresh usage data")
 
             Button {
                 openSettings()
@@ -173,6 +174,7 @@ struct UsagePopoverView: View {
                 Image(systemName: "gear")
             }
             .buttonStyle(.borderless)
+            .help("Settings")
 
             Button {
                 NSApplication.shared.terminate(nil)
@@ -180,6 +182,7 @@ struct UsagePopoverView: View {
                 Image(systemName: "power")
             }
             .buttonStyle(.borderless)
+            .help("Quit AI Cost Tracker")
         }
     }
 
