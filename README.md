@@ -53,3 +53,9 @@ open build/AICostTracker.app
 - Only supports GitHub Copilot personal billing currently
 - Future providers (OpenAI, Anthropic) planned
 - App runs as a menu bar-only app (no dock icon)
+
+### Issues with reading Codex usage with a ChatGPT Pro subscription
+
+When using Codex via a ChatGPT Pro subscription (“Sign in with ChatGPT”), there is currently no supported API to programmatically retrieve usage, remaining quota, or reset times. The only official ways to view this information are the Codex CLI’s interactive /status command and the web dashboard, both of which are intended for human use.
+
+The CLI does not expose a non-interactive status command or structured (e.g. JSON) output, so automation would require driving and scraping the TUI via a pseudo-TTY, which is brittle and unsupported. If programmatic usage tracking is required, it must be done via the API platform with an API key, not via a ChatGPT subscription.
